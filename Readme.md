@@ -8,7 +8,7 @@ Currently preparing for the MD-102 exam while documenting every phase, mistake, 
 
 ## The scenario
 
-Kushaltec is a cloud-first Adelaide business of around 50 staff, with no on-premises servers. The task: stand up and secure its entire endpoint environment from scratch.
+Kushaltec is a cloud-first Adelaide business, with no on-premises servers. The task: stand up and secure its entire endpoint environment from scratch.
 
 ## Progress
 
