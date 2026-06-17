@@ -1,19 +1,22 @@
-# Entra ID — User and Group Management
+# Entra ID and Intune — Identity, Groups, and Device Enrollment
 
 **Lab:** Kushaltec Simulation Environment  
 **Tenant:** Microsoft 365 E5 Trial  
-**Portals:** Microsoft Entra Admin Center · Microsoft 365 Admin Center  
-**Exam objective:** MD-102 — Manage identity and access (Entra ID)
+**Portals:** Microsoft Entra Admin Center · Microsoft 365 Admin Center · Microsoft Intune Admin Center  
+**Exam objective:** MD-102 — Manage identity and access (Entra ID) · Deploy and manage devices (enrollment)
 
 ---
 
 ## Prerequisites
 
 - Global Administrator or User Administrator role in Entra ID
+- Intune Administrator role for the enrollment sections
 - Access to [entra.microsoft.com](https://entra.microsoft.com)
 - Access to [admin.microsoft.com](https://admin.microsoft.com)
+- Access to the Microsoft Intune Admin Center
 - Available M365 E5 licences (Intune + Entra ID P2)
 - KT-Grp-Allstaff dynamic group already created in the tenant
+- A Windows 11 VM with a local administrator account (KT-LT-0001) for the enrollment sections
 
 ---
 
@@ -215,6 +218,169 @@ The tenant now has 2 security groups — dynamic for all-staff policy targeting 
 
 ---
 
+## Part 4 — Configure MDM Automatic Enrollment Scope
+
+---
+
+### Step 11 — Open Devices and select the Windows platform
+
+Go to **Devices > Overview**, then click the **Windows** platform tile.
+
+![Step 11](Screenshots/11.jpg)
+
+- **Devices (1)** selected in the left nav
+- **Windows (2)** platform tile clicked to manage Windows-specific enrollment settings
+
+The "Something went wrong" tiles on this overview are expected in a fresh trial tenant with no devices or policies enrolled yet — they will populate once devices and configuration profiles exist.
+
+---
+
+### Step 12 — Open Device onboarding and Enrollment
+
+From the Windows devices view, expand **Device onboarding** and click **Enrollment**.
+
+![Step 12](Screenshots/12.jpg)
+
+- **Device onboarding (1)** expanded in the left nav
+- **Enrollment (2)** selected — this is where MDM scope and enrollment restrictions are configured
+
+At this point **0 devices** are shown — nothing has enrolled into this tenant yet.
+
+---
+
+### Step 13 — Open Automatic Enrollment
+
+On the Windows | Enrollment page, click **Automatic Enrollment**.
+
+![Step 13](Screenshots/13.jpg)
+
+- **Automatic Enrollment (1)** — configures Windows devices to enroll automatically when they join or register with Microsoft Entra ID
+
+This is the setting that controls whether a device gets MDM-managed the moment a work account signs in, versus requiring a separate manual enrollment step.
+
+---
+
+### Step 14 — Set MDM user scope to Some and select the group
+
+Set **MDM user scope** to **Some**, then choose the group that should be in scope for automatic enrollment.
+
+![Step 14](Screenshots/14.jpg)
+
+- **Some (1)** selected for MDM user scope — only members of a chosen group will be enrolled, rather than every user in the tenant
+- **KT-Grp-All IT staff (2)** ticked in the Select groups panel — 1 result found, 1 selected
+- **Select (3)** clicked to confirm the group choice
+
+**Key point:** Scoping to **Some** with a specific group is the safer rollout pattern for production. Setting this to **All** would enroll every licensed user's device automatically — fine for a small pilot, but risky to apply tenant-wide without testing first.
+
+---
+
+### Step 15 — Confirm the group assignment
+
+Back on the main enrollment configuration page, confirm the group count shown.
+
+![Step 15](Screenshots/15.jpg)
+
+- **1 group selected (1)** confirms KT-Grp-All IT staff is now scoped for MDM automatic enrollment
+
+Click **Save** to commit this configuration (not shown — Save/Discard/Delete buttons sit at the bottom of this page).
+
+---
+
+## Part 5 — Enroll the Windows Device
+
+---
+
+### Step 16 — Open Access work or school on the device
+
+On the test VM (KT-LT-0001), open **Settings > Accounts**, then click **Access work or school**.
+
+![Step 16](Screenshots/16.jpg)
+
+- **Access work or school (1)** — this is the entry point for joining a device to Entra ID or enrolling it in MDM
+
+The device is currently signed in locally as **KKC (Local Account, Administrator)** — this is the lab admin account used to build the VM, separate from the end-user account being enrolled.
+
+---
+
+### Step 17 — Connect a work or school account
+
+Click **Connect**, then enter the test user's email address.
+
+![Step 17](Screenshots/17.jpg)
+
+- **Connect (1)** clicked to open the Microsoft account dialog
+- **Email address (2)** field — entered as the test user's UPN (osmith@kushalkctec.onmicrosoft.com)
+
+Note the **Alternate actions** at the bottom of the dialog: **Join this device to Microsoft Entra ID** and **Join this device to a local Active Directory domain**. Using the email field directly (rather than these alternate links) adds a work account to the existing local profile rather than fully Entra-joining the device — the distinction matters for how the device shows up in Intune afterward.
+
+---
+
+### Step 18 — Enter password and sign in
+
+Enter the password for the work account and click **Sign in**.
+
+![Step 18](Screenshots/18.jpg)
+
+- **Sign in (1)** clicked after entering the password for osmith@kushalkctec.onmicrosoft.com
+
+---
+
+### Step 19 — Confirm the device is connected
+
+The "You're all set!" screen confirms the device is now connected to the tenant.
+
+![Step 19](Screenshots/19.jpg)
+
+- **Done (1)** clicked to finish
+
+The message confirms: **This device is connected to Kushal kc tec**, and explains that switching to this account requires using the Start button and Switch account, signing in with the OSmith@Kushalkctec.onmicrosoft.com email and password.
+
+---
+
+### Step 20 — Updates apply during enrollment
+
+After confirming, the device applies policy and may show an update screen.
+
+![Step 20](Screenshots/20.jpg)
+
+This full-screen message — **Updates are underway, please keep your computer on** — appears as Intune pushes initial policy and compliance settings to the newly enrolled device. No interaction is needed here, just patience.
+
+---
+
+### Step 21 — Windows Hello requirement enforced
+
+On first sign-in with the new account, the device may prompt to set up Windows Hello.
+
+![Step 21](Screenshots/21.jpg)
+
+- **OK (1)** clicked to proceed
+
+This prompt — **Your organization requires you to set up your work or school account with Windows Hello Face, Fingerprint, or PIN** — is strong evidence that a Conditional Access or Identity Protection policy is being enforced against this account, requiring stronger authentication before access is granted.
+
+---
+
+### Step 22 — Sign in as the enrolled user
+
+After setup, switching accounts and signing in shows the new user on the Start menu.
+
+![Step 22](Screenshots/22.jpg)
+
+- **Oliver Smith (1)** shown at the bottom of the Start menu — confirms the device is now signed in as the enrolled work account rather than the local KKC admin account
+
+---
+
+### Step 23 — Verify the account in Manage Accounts
+
+Open **Control Panel > User Accounts > Manage Accounts** to confirm the account type.
+
+![Step 23](Screenshots/23.jpg)
+
+- **Oliver Smith — AzureAD\OliverSmith — Password protected (1)** confirms the account is registered on the device as an Entra ID (AzureAD) identity, not a local Windows account
+
+This is the clearest proof point that the device-to-tenant connection succeeded: the account prefix **AzureAD\\** rather than a local machine name confirms cloud identity is now controlling sign-in on this device.
+
+---
+
 ## Key Concepts
 
 ### Dynamic vs Assigned Membership
@@ -244,6 +410,39 @@ The tenant now has 2 security groups — dynamic for all-staff policy targeting 
 - Requires Entra ID P2 — only enable for privileged access groups
 - **Cannot be changed after group creation**
 
+### MDM User Scope: None vs Some vs All
+
+| | None | Some | All |
+|---|---|---|---|
+| Behaviour | No automatic enrollment | Only selected groups auto-enroll | Every licensed user auto-enrolls |
+| Use case | Manual enrollment only, or testing | Pilot groups, phased rollout | Mature tenant, organization-wide MDM |
+| Risk | Lowest — nothing enrolls unexpectedly | Controlled — limited blast radius | Highest — any licensed user's device enrolls |
+
+Scoping to **Some** with a defined group (as done here with KT-Grp-All IT staff) is the standard approach for testing and staged rollouts before expanding to **All**.
+
+### Access Work or School vs Entra Join
+
+Typing an email address directly into the **Add a work or school account** field adds a secondary work identity to the device alongside the existing local account. This is different from selecting **Join this device to Microsoft Entra ID**, which fully joins the device itself to the tenant and replaces the local sign-in model. Both paths can trigger MDM enrollment, but they register differently in Entra ID (Registered vs Entra joined) and affect what device-level policies can apply.
+
+### Why Windows Hello Appeared
+
+The Windows Hello prompt on first sign-in is a strong signal that a Conditional Access policy or Authentication Methods policy in the tenant requires phishing-resistant or multi-factor authentication for this account. This is expected behaviour once Conditional Access is layered on top of basic enrollment — it will be covered in more depth in a future phase.
+
+### Confirming Enrollment Success
+
+The most reliable on-device check that an Entra identity is active is the **AzureAD\\username** prefix shown in Control Panel's Manage Accounts. A local account would show the device's hostname instead (e.g. **KT-LT-0001\\KKC**). This distinction is a fast way to confirm whether a device-side issue is an enrollment problem or a sign-in problem.
+
+---
+
+## Common Issues and Troubleshooting
+
+| Issue | Likely Cause | Resolution |
+|---|---|---|
+| Device does not appear in Intune after sign-in | Enrollment delay (sync can take several minutes) or MDM scope not saved | Wait for the next Intune sync cycle; confirm Automatic Enrollment was saved with the correct group |
+| User not enrolling automatically despite Some scope | User's account is not actually a member of the scoped group | Verify group membership in Entra ID — direct or dynamic membership must be confirmed, not just intended |
+| Windows Hello setup loops or fails | PIN complexity policy conflict, or TPM unavailable on the VM | Check Authentication Methods policy complexity requirements; confirm the VM has a virtual TPM enabled |
+| Account shows as local instead of AzureAD in Manage Accounts | Email was added via "Add a work or school account" without completing full Entra join | Use Join this device to Microsoft Entra ID instead if a full device join is required |
+
 ---
 
 ## Lab Completion Summary
@@ -258,8 +457,15 @@ The tenant now has 2 security groups — dynamic for all-staff policy targeting 
 | Assigned M365 licences to Alex Chen | ✅ |
 | Created KT-Grp-Operations — Assigned Security group | ✅ |
 | Verified both groups in All groups list | ✅ |
+| Set MDM user scope to Some, scoped to KT-Grp-All IT staff | ✅ |
+| Confirmed 1 group selected on Automatic Enrollment | ✅ |
+| Connected work account via Access work or school on KT-LT-0001 | ✅ |
+| Signed in as osmith@kushalkctec.onmicrosoft.com | ✅ |
+| Confirmed device connected — "You're all set" | ✅ |
+| Windows Hello requirement enforced on first sign-in | ✅ |
+| Verified AzureAD\\OliverSmith registered as the active account | ✅ |
 
 ---
 
 *Kushaltec Lab · MD-102 Endpoint Administrator · Phase 1 Setup*  
-*Tenant domain, UPNs, and Object IDs redacted.*
+*Tenant domain, UPNs, Object IDs, and passwords redacted or obscured where applicable.*
