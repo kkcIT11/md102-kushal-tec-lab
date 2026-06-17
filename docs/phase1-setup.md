@@ -385,7 +385,7 @@ This is the clearest proof point that the device-to-tenant connection succeeded:
 
 Open the **Intune Admin Center > Devices > All devices** and confirm the enrolled device is now listed.
 
-![Step 24](Screenshots/24.jpg)
+![Step 24](Screenshots/24.JPG)
 
 - **KT-LT-0001 (1)** appears in the All devices list — confirms Intune itself, not just the device's local enrollment wizard, recognises this device as managed
 - Compliance status, OS version, and last check-in time confirm the device successfully completed MDM enrollment from the admin's point of view
