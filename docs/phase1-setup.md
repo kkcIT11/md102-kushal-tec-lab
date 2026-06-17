@@ -381,6 +381,17 @@ This is the clearest proof point that the device-to-tenant connection succeeded:
 
 ---
 
+### Step 24 — Confirm the device appears in Intune as a managed device
+
+Open the **Intune Admin Center > Devices > All devices** and confirm the enrolled device is now listed.
+
+![Step 24](Screenshots/24.jpg)
+
+- **KT-LT-0001 (1)** appears in the All devices list — confirms Intune itself, not just the device's local enrollment wizard, recognises this device as managed
+- Compliance status, OS version, and last check-in time confirm the device successfully completed MDM enrollment from the admin's point of view
+
+This is the closing proof point for Phase 1: the device-side "You're all set" message (Step 19) only confirms the device attempted the join — this screenshot confirms Intune actually received and is tracking that enrollment.
+
 ## Key Concepts
 
 ### Dynamic vs Assigned Membership
