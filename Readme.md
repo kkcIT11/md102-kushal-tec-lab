@@ -14,7 +14,7 @@ Kushaltec is a cloud-first Adelaide business, with no on-premises servers. The t
 
 | Phase | Focus | Status |
 | --- | --- | --- |
-| Phase 1 | Stand up Kushaltec (tenant, groups, staff, first managed device) | [In Progress](docs/phase1-setup.md) |
+| Phase 1 | Stand up Kushaltec (tenant, groups, staff, first managed device) | [Complete](docs/phase1-setup.md) |
 | Phase 2 | Set the device standard (compliance, config, LAPS, baseline, updates) | In Progress |
 | Phase 3 | Secure access and onboarding (Conditional Access, Autopilot) | Coming Soon |
 | Phase 4 | Equip and protect (apps, Defender) | Coming Soon |
