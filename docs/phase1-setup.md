@@ -403,25 +403,11 @@ Confirm the TPM configured back in Step 14 is recognised and functioning inside 
 
 ---
 
-### Step 24 — Confirm the repository documentation structure
-
-With KT-LT-0002 built and TPM verified, the lab documentation folder structure tracks each phase as a separate markdown file with its supporting screenshots.
-
-![Step 24](Screenshots/1781679229678_image.png)
-
-- **Screenshots (1)** — folder holding all numbered screenshot evidence referenced throughout these docs
-- **phase1-setup.md (2)** — this file
-- **Readme.md (3)** — repository overview
-
-KT-LT-0002 is now available as a second lab machine alongside KT-LT-0001, giving a clean environment for testing scenarios (such as Autopilot or compliance policy changes) without disturbing the already-enrolled KT-LT-0001 documented in Part 5 below.
-
----
-
 ## Part 5 — Configure MDM Automatic Enrollment Scope
 
 ---
 
-### Step 25 — Open Devices and select the Windows platform
+### Step 24 — Open Devices and select the Windows platform
 
 Go to **Devices > Overview**, then click the **Windows** platform tile.
 
@@ -434,7 +420,7 @@ The "Something went wrong" tiles on this overview are expected in a fresh trial 
 
 ---
 
-### Step 26 — Open Device onboarding and Enrollment
+### Step 25 — Open Device onboarding and Enrollment
 
 From the Windows devices view, expand **Device onboarding** and click **Enrollment**.
 
@@ -447,7 +433,7 @@ At this point **0 devices** are shown — nothing has enrolled into this tenant 
 
 ---
 
-### Step 27 — Open Automatic Enrollment
+### Step 26 — Open Automatic Enrollment
 
 On the Windows | Enrollment page, click **Automatic Enrollment**.
 
@@ -459,7 +445,7 @@ This is the setting that controls whether a device gets MDM-managed the moment a
 
 ---
 
-### Step 28 — Set MDM user scope to Some and select the group
+### Step 27 — Set MDM user scope to Some and select the group
 
 Set **MDM user scope** to **Some**, then choose the group that should be in scope for automatic enrollment.
 
@@ -473,7 +459,7 @@ Set **MDM user scope** to **Some**, then choose the group that should be in scop
 
 ---
 
-### Step 29 — Confirm the group assignment
+### Step 28 — Confirm the group assignment
 
 Back on the main enrollment configuration page, confirm the group count shown.
 
@@ -489,7 +475,7 @@ Click **Save** to commit this configuration (not shown — Save/Discard/Delete b
 
 ---
 
-### Step 30 — Open Access work or school on the device
+### Step 29 — Open Access work or school on the device
 
 On the test VM (KT-LT-0001), open **Settings > Accounts**, then click **Access work or school**.
 
@@ -501,7 +487,7 @@ The device is currently signed in locally as **KKC (Local Account, Administrator
 
 ---
 
-### Step 31 — Connect a work or school account
+### Step 30 — Connect a work or school account
 
 Click **Connect**, then enter the test user's email address.
 
@@ -514,7 +500,7 @@ Note the **Alternate actions** at the bottom of the dialog: **Join this device t
 
 ---
 
-### Step 32 — Enter password and sign in
+### Step 31 — Enter password and sign in
 
 Enter the password for the work account and click **Sign in**.
 
@@ -524,7 +510,7 @@ Enter the password for the work account and click **Sign in**.
 
 ---
 
-### Step 33 — Confirm the device is connected
+### Step 32 — Confirm the device is connected
 
 The "You're all set!" screen confirms the device is now connected to the tenant.
 
@@ -536,7 +522,7 @@ The message confirms: **This device is connected to Kushal kc tec**, and explain
 
 ---
 
-### Step 34 — Updates apply during enrollment
+### Step 33 — Updates apply during enrollment
 
 After confirming, the device applies policy and may show an update screen.
 
@@ -546,7 +532,7 @@ This full-screen message — **Updates are underway, please keep your computer o
 
 ---
 
-### Step 35 — Windows Hello requirement enforced
+### Step 34 — Windows Hello requirement enforced
 
 On first sign-in with the new account, the device may prompt to set up Windows Hello.
 
@@ -558,7 +544,7 @@ This prompt — **Your organization requires you to set up your work or school a
 
 ---
 
-### Step 36 — Sign in as the enrolled user
+### Step 35 — Sign in as the enrolled user
 
 After setup, switching accounts and signing in shows the new user on the Start menu.
 
@@ -568,7 +554,7 @@ After setup, switching accounts and signing in shows the new user on the Start m
 
 ---
 
-### Step 37 — Verify the account in Manage Accounts
+### Step 36 — Verify the account in Manage Accounts
 
 Open **Control Panel > User Accounts > Manage Accounts** to confirm the account type.
 
@@ -580,7 +566,7 @@ This is the clearest proof point that the device-to-tenant connection succeeded:
 
 ---
 
-### Step 38 — Confirm the device appears in Intune as a managed device
+### Step 37 — Confirm the device appears in Intune as a managed device
 
 Open the **Intune Admin Center > Devices > All devices** and confirm the enrolled device is now listed.
 
