@@ -35,7 +35,6 @@ Go to **Entra ID > Users > All users**, then click **New user > Create new user*
 - **All users (2)** active in the sub-nav
 - **Create new user (3)** visible in the dropdown — creates an internal organisational user
 - Existing users already in tenant: Kushal KC and Oliver Smith
-- Breadcrumb shows path came from **KT-Grp-Allstaff | Members** — navigated here from within the dynamic group context
 
 ---
 
